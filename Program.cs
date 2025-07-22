@@ -46,13 +46,18 @@ class Program
                     {
                         carService.EarnedMoney -= carService.FinePerParts;
                     }
+                    else
+                    {
+                        continue;
+                    }
                 }
             }
             else
             {
                 carService.EarnedMoney -= carService.Fine;
-                continue;
+                
             }
+            
             Console.WriteLine($"Now we have {carService.EarnedMoney} money");
             car = null;
         }
