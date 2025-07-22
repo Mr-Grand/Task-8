@@ -20,4 +20,11 @@ public class Storage
                               $" Цена - {part.Key.Price}");
         }
     }
+    
+    public IReadOnlyDictionary<Part, int> Parts => _parts;
+
+    public void TakePart(Part part)
+    {
+        _parts[part] -= 1;
+    }
 }
