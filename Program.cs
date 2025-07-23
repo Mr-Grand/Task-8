@@ -26,7 +26,7 @@ class Program
                 }
             }
 
-            Console.WriteLine($"Price for repairing: {priceForRepairing}");
+            Console.WriteLine($"Price for repairing: {Math.Round(priceForRepairing,2)}");
             Console.WriteLine("Do you want to repain?" +
                               "\n1) Yes" +
                               "\n2) No");
@@ -36,6 +36,7 @@ class Program
             if (input == ConsoleKey.D1)
             {
                 foreach (var carPart in car.CarParts)
+                
                 {
                     if (!carPart.Value && storage.Parts[carPart.Key] != 0)
                     {
@@ -60,6 +61,8 @@ class Program
             
             Console.WriteLine($"Now we have {carService.EarnedMoney} money");
             car = null;
+            Console.ReadLine();
+            Console.Clear();
         }
     }
 }
