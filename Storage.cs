@@ -2,14 +2,15 @@
 
 public class Storage
 {
-    private static readonly Random random = new Random();
-    private Dictionary<Part, int> _parts = new Dictionary<Part, int>
+    private static readonly Random Random = new();
+    private Dictionary<PartType, int> _parts = new()
     {
-        [new Part1()] = random.Next(1, 5),
-        [new Part2()] = random.Next(1, 5),
-        [new Part3()] = random.Next(1, 5),
-        [new Part4()] = random.Next(1, 5),
-        [new Part5()] = random.Next(1, 5),
+        [PartType.Brakes] = Random.Next(1,11),
+        [PartType.Suspension] = Random.Next(1,11),
+        [PartType.Engine] = Random.Next(1,11),
+        [PartType.Filter] = Random.Next(1,11),
+        [PartType.Wheel] = Random.Next(1,11),
+        [PartType.Oil] = Random.Next(1,11)
     };
 
     public void ShowStoredParts()
