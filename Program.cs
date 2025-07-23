@@ -60,7 +60,6 @@ class Program
             }
             
             Console.WriteLine($"Now we have {carService.EarnedMoney} money");
-            car = null;
             Console.ReadLine();
             Console.Clear();
         }
