@@ -4,6 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        PartsSet partsSet = new PartsSet();
         Storage storage = new Storage();
         CarService carService = new CarService();
         
@@ -13,7 +14,7 @@ class Program
             Console.WriteLine("Here is your storage:");
             storage.ShowStoredParts();
             
-            Car car = new Car();
+            Car car = new Car(partsSet.Parts);
 
             double priceForRepairing = 0;
 

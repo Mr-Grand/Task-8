@@ -4,19 +4,17 @@ public class Car
 {
     public static Random random = new Random();
     public static int CarCount { get; private set; } = 0;
-    private Dictionary<Part, bool> _carParts = new Dictionary<Part, bool>()
-    {
-        [new Part1()] = random.Next(2) == 0,
-        [new Part2()] = random.Next(2) == 0,
-        [new Part3()] = random.Next(2) == 0,
-        [new Part4()] = random.Next(2) == 0,
-        [new Part5()] = random.Next(2) == 0,
-    }; // Честно говоря - я не понял вординг задачи, есть ли лимит на 1 поломанную деталь
+    private Dictionary<Part, bool> _carParts = new Dictionary<Part, bool>();
 
-    public Car()
+    public Car(IReadOnlyList<Part> parts)
     {
+        foreach (var part in parts)
+        {
+            _carParts.Add(part, random.Next(2) == 0);
+        }
         CarCount++;
     }
     
     public IReadOnlyDictionary<Part,bool> CarParts => _carParts;
+    
 }
