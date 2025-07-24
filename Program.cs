@@ -4,16 +4,50 @@ class Program
 {
     static void Main(string[] args)
     {
-        PartsSet partsSet = new PartsSet();
         Storage storage = new Storage();
         CarService carService = new CarService();
         
+        storage.ShowStoredParts();
+        storage.TakePart(PartType.Engine);
+        storage.ShowStoredParts();
         
-        for (int i = 0; i < 5; i++) // i - очередь автомобилей
+        
+        Console.WriteLine("Генерируются автомобили...");
+        Thread.Sleep(2000);
+        int carNumber = RandomClass.Random.Next(3, 10);
+        
+        List<Car> cars = new List<Car>();
+        for (int i = 0; i < carNumber; i++)
+        {
+            cars.Add(new Car());
+        }
+
+        Console.WriteLine($"В очереди {carNumber} автомобилей");
+
+        
+        
+        while (cars.Count > 0)
+        {
+            Console.WriteLine("Приехала машина! Вот её поломки:");
+            foreach (var part in cars[0].CarParts)
+            {
+                if (!part.Value)
+                {
+                    Console.WriteLine($"Сломаная деталь - {part.Key}");
+                }
+            }
+
+            Console.ReadLine();
+            cars.RemoveAt(0);
+        }
+
+        
+        
+        /*for (int i = 0; i < 5; i++) // i - очередь автомобилей
         {
             Console.WriteLine("Here is your storage:");
             storage.ShowStoredParts();
-            
+
             Car car = new Car(partsSet.Parts);
 
             double priceForRepairing = 0;
@@ -33,11 +67,11 @@ class Program
                               "\n2) No");
 
             ConsoleKey input = Console.ReadKey().Key;
-            
+
             if (input == ConsoleKey.D1)
             {
                 foreach (var carPart in car.CarParts)
-                
+
                 {
                     if (!carPart.Value && storage.Parts[carPart.Key] != 0)
                     {
@@ -57,12 +91,12 @@ class Program
             else
             {
                 carService.EarnedMoney -= carService.Fine;
-                
+
             }
-            
+
             Console.WriteLine($"Now we have {carService.EarnedMoney} money");
             Console.ReadLine();
             Console.Clear();
-        }
+        }*/
     }
 }

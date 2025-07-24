@@ -2,29 +2,28 @@
 
 public class Storage
 {
-    private static readonly Random Random = new();
+    
     private Dictionary<PartType, int> _parts = new()
     {
-        [PartType.Brakes] = Random.Next(1,11),
-        [PartType.Suspension] = Random.Next(1,11),
-        [PartType.Engine] = Random.Next(1,11),
-        [PartType.Filter] = Random.Next(1,11),
-        [PartType.Wheel] = Random.Next(1,11),
-        [PartType.Oil] = Random.Next(1,11)
+        [PartType.Brakes] = RandomClass.Random.Next(1,11),
+        [PartType.Suspension] = RandomClass.Random.Next(1,11),
+        [PartType.Engine] = RandomClass.Random.Next(1,11),
+        [PartType.Filter] = RandomClass.Random.Next(1,11),
+        [PartType.Wheel] = RandomClass.Random.Next(1,11),
+        [PartType.Oil] = RandomClass.Random.Next(1,11)
     };
 
     public void ShowStoredParts()
     {
         foreach (var part in _parts)
         {
-            Console.WriteLine($"Деталь: {part.Key.Name}. Количество: {part.Value}." +
-                              $" Цена - {part.Key.Price}");
+            Console.WriteLine($"Деталь: {part.Key}. Количество: {part.Value}");
         }
     }
     
-    public IReadOnlyDictionary<Part, int> Parts => _parts;
-
-    public void TakePart(Part part)
+    public IReadOnlyDictionary<PartType, int> Parts => _parts;
+    
+    public void TakePart(PartType part)
     {
         _parts[part] -= 1;
     }
