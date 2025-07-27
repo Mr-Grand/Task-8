@@ -10,6 +10,9 @@ public class Car
        [PartType.Filter] = RandomClass.Random.Next(2) == 0,
        [PartType.Wheel] = RandomClass.Random.Next(2) == 0
    };
+   // Согласно заданию идет речь об одной поломанной детали.
+   // Я сделал случайную поломку для каждой
+   // Возможно нужно исправить для поломки только 1ой детали?
     
    public IReadOnlyDictionary<PartType,bool> CarParts => _carParts;
    

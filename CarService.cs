@@ -2,12 +2,12 @@
 
 public class CarService
 {
-    public int PaymentForWork = 10;
-    public int Fine { get; }= 100;
-    public int FinePerParts { get; }= 25;
-
     private double _earnedMoney;
-
+    public int PaymentForWork { get; } = 10;
+    public int Fine { get; } = 100;
+    public int FinePerParts { get; } = 25;
+    
+    
     public double EarnedMoney
     {
         get
@@ -16,8 +16,23 @@ public class CarService
         }
         set
         {
-            _earnedMoney = value;
+            _earnedMoney = Math.Round(value,2);
         }
+    }
+
+    public void PartRepaired(PartType part)
+    {
+        EarnedMoney += PaymentForWork + PartsCatalog.Prices[part];
+    }
+    
+    public void PayFine()
+    {
+        EarnedMoney -= Fine;
+    }
+    
+    public void PayFinePerPart()
+    {
+        EarnedMoney -= FinePerParts;
     }
 
 }
