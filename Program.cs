@@ -6,27 +6,45 @@ class Program
     {
         Storage storage = new Storage();
         CarService carService = new CarService();
+        List<Car> waitingCars = new List<Car>();
+        waitingCars = GenerateCars();
 
+        MachineMaintence(waitingCars, storage, carService);
+    }
+
+    private static void ShowStoredParts(Storage storage)
+    {
+        foreach (var part in storage.Parts)
+        {
+            Console.WriteLine($"Деталь: {part.Key}. Количество: {part.Value}");
+        }
+    }
+
+    private static List<Car> GenerateCars()
+    {
+        List<Car> cars = new List<Car>();
         Console.WriteLine("Генерируются автомобили...");
         Thread.Sleep(1000);
         int carNumber = RandomClass.Random.Next(3, 10);
-
-        List<Car> cars = new List<Car>();
         for (int i = 0; i < carNumber; i++)
         {
             cars.Add(new Car());
         }
 
         Console.WriteLine($"В очереди {cars.Count} автомобилей");
+        return cars;
+    }
 
-        while (cars.Count > 0)
+    private static void MachineMaintence(List<Car> waitingCars, Storage storage, CarService carService)
+    {
+        while (waitingCars.Count > 0)
         {
             Console.WriteLine($"\nВот детали на складе:");
-            storage.ShowStoredParts();
+            ShowStoredParts(storage);
 
             double repairPrice = 0;
             Console.WriteLine("\nПриехала машина! Вот её поломки:");
-            foreach (var part in cars[0].CarParts)
+            foreach (var part in waitingCars[0].CarParts)
             {
                 if (!part.Value)
                 {
@@ -41,46 +59,57 @@ class Program
                               "\n1) Да" +
                               "\n2) Нет");
 
-            ConsoleKey input = Console.ReadKey().Key;
+            int choice = ReadMenu();
 
-            switch (input)
+            if (choice == 1)
             {
-                case ConsoleKey.D1:
-                    foreach (var part in cars[0].CarParts)
+                foreach (var part in waitingCars[0].CarParts)
+                {
+                    if (!part.Value && storage.Parts[part.Key] != 0)
                     {
-                        if (!part.Value && storage.Parts[part.Key] != 0)
-                        {
-                            carService.PartRepaired(part.Key);
-                            storage.TakePart(part.Key);
-                            // Можно добавить метод изменения состояния
-                            // детали у машины. Но нужно ли?
-                        }
-                        else if (!part.Value && storage.Parts[part.Key] == 0)
-                        {
-                            carService.PayFinePerPart();
-                        }
+                        carService.PartRepaired(part.Key);
+                        storage.TakePart(part.Key);
                     }
-
-                    break;
-                default:
-                    carService.PayFine();
-                    break;
-            }
-
-
-            Console.WriteLine();
-            if (carService.EarnedMoney > 0)
-            {
-                Console.WriteLine($"Заработано {carService.EarnedMoney} денег");
+                    else if (!part.Value && storage.Parts[part.Key] == 0)
+                    {
+                        carService.PayFinePerPart();
+                    }
+                }
             }
             else
             {
-                Console.WriteLine($"В минусе на {carService.EarnedMoney}");
+                carService.PayFine();
             }
 
+            MoneyStatus(carService);
+
             Console.ReadKey();
-            cars.RemoveAt(0);
+            waitingCars.RemoveAt(0);
             Console.Clear();
+        }
+    }
+
+    private static int ReadMenu()
+    {
+        while (true)
+        {
+            var key = Console.ReadKey().Key;
+            if (key == ConsoleKey.D1) return 1;
+            if (key == ConsoleKey.D2) return 2;
+            Console.WriteLine("Введите корректное значение");
+        }
+    }
+
+    private static void MoneyStatus(CarService carService)
+    {
+        Console.WriteLine();
+        if (carService.EarnedMoney > 0)
+        {
+            Console.WriteLine($"Заработано {carService.EarnedMoney} денег");
+        }
+        else
+        {
+            Console.WriteLine($"В минусе на {carService.EarnedMoney}");
         }
     }
 }

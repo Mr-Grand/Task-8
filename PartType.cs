@@ -6,6 +6,5 @@ public enum PartType
     Wheel,
     Filter,
     Brakes,
-    Suspension,
-    Oil
+    Suspension
 }

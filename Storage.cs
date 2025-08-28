@@ -9,21 +9,19 @@ public class Storage
         [PartType.Engine] = RandomClass.Random.Next(1, 5),
         [PartType.Filter] = RandomClass.Random.Next(1, 5),
         [PartType.Wheel] = RandomClass.Random.Next(1, 5),
-        [PartType.Oil] = RandomClass.Random.Next(1, 5)
     };
-
-    public void ShowStoredParts()
-    {
-        foreach (var part in Parts)
-        {
-            Console.WriteLine($"Деталь: {part.Key}. Количество: {part.Value}");
-        }
-    }
 
     public IReadOnlyDictionary<PartType, int> Parts => _parts;
 
     public void TakePart(PartType part)
     {
-        _parts[part] -= 1;
+        if (_parts[part] > 0 && part != null)
+        {
+            _parts[part] -= 1;
+        }
+        else
+        {
+            Console.WriteLine("Недостаточно частей на складе");
+        }
     }
 }

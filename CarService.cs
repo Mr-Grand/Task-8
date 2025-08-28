@@ -10,8 +10,8 @@ public class CarService
 
     public double EarnedMoney
     {
-        get { return Math.Round(_earnedMoney, 2); }
-        set { _earnedMoney = Math.Round(value, 2); }
+        get { return _earnedMoney; }
+        private set { _earnedMoney = value; }
     }
 
     public void PartRepaired(PartType part)
