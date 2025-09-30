@@ -25,12 +25,13 @@ class Program
         List<Car> cars = new List<Car>();
         Console.WriteLine("Генерируются автомобили...");
         Thread.Sleep(1000);
+        
         int carNumber = RandomClass.Random.Next(3, 10);
         for (int i = 0; i < carNumber; i++)
         {
             cars.Add(new Car());
         }
-
+        
         Console.WriteLine($"В очереди {cars.Count} автомобилей");
         return cars;
     }
@@ -49,7 +50,6 @@ class Program
                 if (!part.Value)
                 {
                     Console.WriteLine($"Сломаная деталь - {part.Key}");
-
                     repairPrice += PartsCatalog.Prices[part.Key] + carService.PaymentForWork;
                 }
             }
@@ -60,7 +60,6 @@ class Program
                               "\n2) Нет");
 
             int choice = ReadMenu();
-
             if (choice == 1)
             {
                 foreach (var part in waitingCars[0].CarParts)
